@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
 import deviceImage from '../assets/5eda5ea1-e257-495b-bf75-24690747eb40.jpeg';
+import { useParams } from 'react-router-dom';
+import { fetchOneDevice } from '../http/deviseAPI';
 
 const DevicePage = () => {
 
-    const device = {id: 1, name: 'Samsung Galaxy S22', price: 1000, rating: 5, img: deviceImage};
-    const description = [
-      {id: 1, title: 'Оперативная память', description: '5 гб'},
-      {id: 2, title: 'Камера', description: '480 мп'},
-      {id: 3, title: 'Процессор', description: 'core i9'},
-      {id: 4, title: 'Аккумулятор', description: 'есть'},
-      {id: 5, title: 'Хороший?', description: 'ДА'}
-    ]
+    const [device, setDevice] = useState({info:[]});
+    const {id} = useParams();
+
+    useEffect( () => {
+        fetchOneDevice(id).then( data => setDevice(data));
+    }, []);
 
     return (
         <Container className='mt-3'>
             <Row>
                 <Col md={4}>
-                    <Image width={300} height={300} src={device.img}/>
+                    <Image width={300} height={300} src={"http://localhost:5000/" + device.img}/>
                 </Col>
                 <Col md={4}>
                     <Row>
@@ -41,7 +41,7 @@ const DevicePage = () => {
             </Row>
             <Row className='d-flex flex-column m-2'>
                 <h2>Характеристики</h2>
-                {description.map((info, index) => 
+                {device.info.map((info, index) => 
                     <Row key={info.id} style={{background: index % 2 === 0 ? 'lightgray' : 'transparent', padding: 10}}>
                         {info.title}: {info.description}
                     </Row> 
