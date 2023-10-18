@@ -2,7 +2,6 @@ const { Device, DeviceInfo } = require('../modules/models')
 const ApiError = require('../error/apiError')
 const uuid = require('uuid');
 const path = require('path');
-const { json } = require('sequelize');
 
 class DeviceControllers {
 
@@ -35,19 +34,19 @@ class DeviceControllers {
 
     async addDevice(req, res, next) {
         try {
-            const {name, price, brandId, typeId, info} = req.body;
+            const {name, price, brandId, typeId, info: infoData} = req.body;
             const {img} = req.files;
             let fileName = uuid.v4() + ".jpeg";
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
             const addDevice = await Device.create({name, price, brandId, typeId, img: fileName});
 
-            if(info) {
-                info = json.parse(info);
+            if(infoData) {
+                const info = JSON.parse(infoData)
                 info.forEach(i => {
                     DeviceInfo.create({
-                        tile: i.tile,
+                        title: i.title,
                         description: i.description,
-                        deviceId: addDevice.id
+                        id: addDevice.id
                     });
                 });
             };
