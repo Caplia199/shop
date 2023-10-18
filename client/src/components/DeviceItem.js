@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, Image, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { DEVICE_ROUTE } from '../utils/consts';
-import deviceImage from '../assets/5eda5ea1-e257-495b-bf75-24690747eb40.jpeg';
 
 const DeviceItem = ({device}) => {
 
