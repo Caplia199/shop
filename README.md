@@ -1,4 +1,4 @@
-# 🎭 Shop and Tests
+#  Shop and Tests
 
 ## 🔍 Overview
 
