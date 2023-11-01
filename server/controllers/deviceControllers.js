@@ -32,6 +32,15 @@ class DeviceControllers {
         return res.json(deviceById);
     };
 
+    async deleteDeviceById(req, res) {
+        const {id} = req.params;
+        const deviceById = await Device.decrement({
+            where:{id},
+            // include: [{model: DeviceInfo, as: 'info'}]
+        });
+        return res.json(deviceById);
+    };
+
     async addDevice(req, res, next) {
         try {
             const {name, price, brandId, typeId, info: infoData} = req.body;

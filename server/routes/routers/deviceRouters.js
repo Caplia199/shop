@@ -6,5 +6,6 @@ const checRoleMiddleware = require('../../middleware/checRoleMiddleware');
 router.get('/', deviceControllers.allDevices);
 router.get('/:id', deviceControllers.deviceById);
 router.post('/', checRoleMiddleware('ADMIN'), deviceControllers.addDevice);
+router.delete('/:id', deviceControllers.deleteDeviceById);
 
 module.exports = router;
