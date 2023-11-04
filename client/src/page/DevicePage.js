@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
-import deviceImage from '../assets/5eda5ea1-e257-495b-bf75-24690747eb40.jpeg';
 import { useParams } from 'react-router-dom';
 import { fetchOneDevice } from '../http/deviseAPI';
 
@@ -11,7 +10,7 @@ const DevicePage = () => {
 
     useEffect( () => {
         fetchOneDevice(id).then( data => setDevice(data));
-    }, []);
+    }, [id]);
 
     return (
         <Container className='mt-3'>

@@ -19,7 +19,7 @@ const Shop = observer(() => {
             device.setDevice(data.rows)
             device.setTotalCount(data.count)
         });
-    }, []);
+    }, [device]);
 
     useEffect( () => {
         fetchDevice(device.selectedType.id, device.selectedBrand.id, device.page, 2).then(data => {

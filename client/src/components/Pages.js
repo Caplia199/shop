@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Pagination } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import {observer} from 'mobx-react-lite';
 import { Context } from '..';
 
@@ -14,7 +14,7 @@ const Pages = observer(() => {
         pages.push(i+1)
     };
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     return (
         <Pagination className='mt-5'>
