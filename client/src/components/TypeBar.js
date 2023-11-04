@@ -1,26 +1,25 @@
 import React, { useContext } from 'react';
-import { observer } from 'mobx-react-lite'
+import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
-import { ListGroup } from 'react-bootstrap'
+import { List, ListItem, ListItemText } from '@mui/material';
 
 const TypeBar = observer(() => {
-
-    const {device} = useContext(Context);
+    const { device } = useContext(Context);
 
     return (
-        <ListGroup>
-            {device.types.map(type => 
-                <ListGroup.Item 
-                    style={{cursor: 'pointer'}}
-                    active={type.id === device.selectedType.id}
-                    onClick={() => device.setSelectedType(type)}
+        <List>
+            {device.types.map((type) => (
+                <ListItem
+                    button
                     key={type.id}
+                    selected={type.id === device.selectedType.id}
+                    onClick={() => device.setSelectedType(type)}
                 >
-                    {type.name}
-                </ListGroup.Item>
-            )}
-        </ListGroup>
+                    <ListItemText primary={type.name} />
+                </ListItem>
+            ))}
+        </List>
     );
-})
+});
 
 export default TypeBar;

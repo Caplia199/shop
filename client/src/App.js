@@ -4,7 +4,7 @@ import AppRouter from './components/AppRouter';
 import Navbar from './components/NavBar';
 import { observer } from 'mobx-react-lite';
 import { Context } from '.';
-import { Spinner } from 'react-bootstrap';
+// import CircularProgress from '@mui/material/CircularProgress';
 import { check } from './http/userAPI';
 
 const App = observer(() => {
@@ -29,7 +29,7 @@ const App = observer(() => {
           height: '100vh',
         }}
       >
-        <Spinner animation="border" />
+        {/* <CircularProgress/> */}
       </div>
     );
   };

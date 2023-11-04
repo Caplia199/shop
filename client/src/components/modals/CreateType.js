@@ -1,45 +1,39 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import Modal from 'react-bootstrap/Modal';
-import { createType } from '../../http/deviseAPI';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import { createType } from '../../http/deviceAPI';
 
-const CreateType = ({show, onHide}) => {
-
+const CreateType = ({ show, onHide }) => {
     const [value, setValue] = useState('');
 
     const addType = () => {
-        createType({name: value}).then(data => {
-            setValue('')
-            onHide()
-        })
+        createType({ name: value }).then((data) => {
+            setValue('');
+            onHide();
+        });
     };
 
     return (
-        <Modal
-            show={show}
-            onHide={onHide}
-            size="lg"
-            centered
-        >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    Добавить новый тип
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Control
+        <Dialog open={show} onClose={onHide} fullWidth maxWidth="sm">
+            <DialogTitle>Добавить новый тип</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    <TextField
                         value={value}
-                        onChange={e => setValue(e.target.value)}
-                        placeholder='Введите название'
+                        onChange={(e) => setValue(e.target.value)}
+                        label="Введите название"
+                        fullWidth
                     />
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant={'outline-danger'} onClick={onHide}>Отменить</Button>
-                <Button variant={'outline-success'} onClick={addType}>Добавить</Button>
-            </Modal.Footer>
-        </Modal>
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button variant="outlined" onClick={onHide} color="error">
+                    Отменить
+                </Button>
+                <Button variant="outlined" onClick={addType} color="success">
+                    Добавить
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 }
 

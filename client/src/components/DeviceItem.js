@@ -1,29 +1,41 @@
 import React from 'react';
-import { Card, Image, Col } from 'react-bootstrap';
+import { Card, CardContent, CardMedia, Typography, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { DEVICE_ROUTE } from '../utils/consts';
 
-const DeviceItem = ({device}) => {
-
+const DeviceItem = ({ device }) => {
     const navigate = useNavigate();
 
+    const handleClick = () => {
+        navigate(DEVICE_ROUTE + '/' + device.id);
+    };
+
     return (
-        <Col md={3} className='mt-3' onClick={() => {navigate(DEVICE_ROUTE + '/' + device.id)}}>
-            <Card style={{width: 150, cursor: 'pointer'}} border={'light'}>
-                <Image width={150} height={150} src={"http://localhost:5000/" + device.img}/>
-                <div className='d-flex justify-content-between align-items-center mt-1'>
-                    <div>SAMSUNG</div>
-                    <div className='d-flex align-items-center'>
+        <Grid item xs={6} sm={4} md={3} onClick={handleClick} style={{ cursor: 'pointer' }}>
+            <Card>
+                <CardMedia
+                    component="img"
+                    height="150"
+                    image={`http://localhost:5000/${device.img}`}
+                    alt={device.name}
+                />
+                <CardContent>
+                    <Typography variant="h6" component="div">
+                        {device.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                        SAMSUNG
+                    </Typography>
+                    <div className="d-flex justify-content-between align-items-center mt-1">
                         <div>
                             {device.rating}
-                            <span  width={20} height={20}>&#9733;</span>
+                            <span style={{ fontSize: 20 }}>&#9733;</span>
                         </div>
                     </div>
-                </div>
-                <div>{device.name}</div>
+                </CardContent>
             </Card>
-        </Col>
-    )
+        </Grid>
+    );
 };
 
 export default DeviceItem;

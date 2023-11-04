@@ -1,54 +1,75 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
-import deviceImage from '../assets/5eda5ea1-e257-495b-bf75-24690747eb40.jpeg';
+import { Button, Card, Container, Grid, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { fetchOneDevice } from '../http/deviseAPI';
+import { fetchOneDevice } from '../http/deviceAPI';
 
 const DevicePage = () => {
 
-    const [device, setDevice] = useState({info:[]});
-    const {id} = useParams();
+  const [device, setDevice] = useState({ info: [] });
+  const { id } = useParams();
 
-    useEffect( () => {
-        fetchOneDevice(id).then( data => setDevice(data));
-    }, []);
+  useEffect(() => {
+    fetchOneDevice(id).then((data) => setDevice(data));
+  }, [id]);
 
-    return (
-        <Container className='mt-3'>
-            <Row>
-                <Col md={4}>
-                    <Image width={300} height={300} src={"http://localhost:5000/" + device.img}/>
-                </Col>
-                <Col md={4}>
-                    <Row>
-                      <h2>{device.name}</h2>
-                      <Row className='d-flex align-items-center justify-content-center' style={{fontSize:30}}>
-                          <div>Рейтинг: {device.rating}
-                              <span  width={20} height={20}>&#9733;</span>
-                          </div>
-                      </Row>
-                    </Row>
-                </Col>
-                <Col md={4}>
-                    <Card
-                        className='d-flex align-items-center justify-content-around' 
-                        style={{width:300, height:300, fontSize:30, border:'5px solid lightgray'}}
-                        >
-                        <h3>От: {device.price} рублей</h3>
-                        <Button variant={'outline-dark'}>Добавить в корзину</Button>
-                    </Card>
-                </Col>
-            </Row>
-            <Row className='d-flex flex-column m-2'>
-                <h2>Характеристики</h2>
-                {device.info.map((info, index) => 
-                    <Row key={info.id} style={{background: index % 2 === 0 ? 'lightgray' : 'transparent', padding: 10}}>
-                        {info.title}: {info.description}
-                    </Row> 
-                )}
-            </Row>
-        </Container>
-    );
+  return (
+    <Container sx={{ mt: 3 }}>
+      <Grid container>
+        <Grid item md={4}>
+          <img
+            width={300}
+            height={300}
+            src={`http://localhost:5000/${device.img}`}
+          />
+        </Grid>
+        <Grid item md={4}>
+          <Typography variant="h4">{device.name}</Typography>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            sx={{ fontSize: 30 }}
+          >
+            <Typography>Рейтинг: {device.rating}</Typography>
+            <Typography fontSize={20}>&#9733;</Typography>
+          </Grid>
+        </Grid>
+        <Grid item md={4}>
+          <Card
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 300,
+              height: 300,
+              fontSize: 30,
+              border: '5px solid lightgray',
+            }}
+          >
+            <Typography variant="h5">От: {device.price} рублей</Typography>
+            <Button variant="outlined">Добавить в корзину</Button>
+          </Card>
+        </Grid>
+      </Grid>
+      <Grid container direction="column" sx={{ mt: 2 }}>
+        <Typography variant="h5">Характеристики</Typography>
+        {device.info.map((info, index) => (
+          <Grid
+            key={info.id}
+            container
+            sx={{
+              background: index % 2 === 0 ? 'lightgray' : 'transparent',
+              padding: 2,
+            }}
+          >
+            <Typography>{info.title}: {info.description}</Typography>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
+  );
 }
 
 export default DevicePage;

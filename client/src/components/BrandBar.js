@@ -1,26 +1,29 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card, Grid } from '@mui/material';
 import { Context } from '../index';
 
 const BrandBar = observer(() => {
   const { device } = useContext(Context);
 
   return (
-    <Row className='d-flex'>
+    <Grid container spacing={2}>
       {device.brands.map((brand) => (
-        <Col key={brand.id}>
+        <Grid item key={brand.id}>
           <Card
-            className='p-3 mb-3'
+            sx={{
+              p: 3,
+              mb: 3,
+              cursor: 'pointer',
+              border: brand.id === device.selectedBrand.id ? '2px solid red' : '2px solid lightgray',
+            }}
             onClick={() => device.setSelectedBrand(brand)}
-            style={{ cursor: 'pointer' }}
-            border={brand.id === device.selectedBrand.id ? 'danger' : 'light'}
           >
             {brand.name}
           </Card>
-        </Col>
+        </Grid>
       ))}
-    </Row>
+    </Grid>
   );
 });
 

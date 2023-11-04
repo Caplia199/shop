@@ -1,44 +1,36 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import Modal from 'react-bootstrap/Modal';
-import { createBrand } from '../../http/deviseAPI';
+import { Button, Modal, TextField } from '@mui/material';
+import { createBrand } from '../../http/deviceAPI';
 
-const CreateBrand = ({show, onHide}) => {
-
+const CreateBrand = ({ show, onHide }) => {
     const [value, setValue] = useState('');
 
     const addBrand = () => {
-        createBrand({name: value}).then(data => {
-            setValue('')
-            onHide()
-        })
+        createBrand({ name: value }).then((data) => {
+            setValue('');
+            onHide();
+        });
     };
 
     return (
-        <Modal
-            show={show}
-            onHide={onHide}
-            size="lg"
-            centered
-        >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    Добавить новый бренд
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Control
-                        value={value}
-                        onChange={e => setValue(e.target.value)}
-                        placeholder='Введите название'
-                    />
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant={'outline-danger'} onClick={onHide}>Отменить</Button>
-                <Button variant={'outline-success'} onClick={addBrand}>Добавить</Button>
-            </Modal.Footer>
+        <Modal open={show} onClose={onHide}>
+            <div style={{ padding: 16, width: 400, backgroundColor: 'white' }}>
+                <h5>Добавить новый бренд</h5>
+                <TextField
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    label="Введите название"
+                    fullWidth
+                />
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 16 }}>
+                    <Button variant="outlined" onClick={onHide} color="error">
+                        Отменить
+                    </Button>
+                    <Button variant="outlined" onClick={addBrand} color="success">
+                        Добавить
+                    </Button>
+                </div>
+            </div>
         </Modal>
     );
 }

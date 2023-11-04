@@ -7,9 +7,9 @@ export default class DeviceStore {
         this._device = []
         this._selectedType = {}
         this._selectedBrand = {}
-        this._page = 1
+        this._page = 2
         this._totalCount = 0
-        this._limit = 3
+        this._limit = 10
         makeAutoObservable(this)
     };
 

@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container } from '@mui/material';
 import CreateBrand from '../components/modals/CreateBrand';
 import CreateType from '../components/modals/CreateType';
 import CreateDevice from '../components/modals/CreateDevice';
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  button: {
+    mt: 4,
+    p: 2,
+  },
+};
 
 const Admin = () => {
 
@@ -11,22 +22,22 @@ const Admin = () => {
     const [typeVisible, setTypeVisible] = useState(false);
 
     return (
-        <Container className='d-flex flex-column'>
+        <Container sx={styles.container}>
             <Button 
-                variant={'outline-dark'} 
-                className='mt-4 p-2'
+                variant='outlined' 
+                sx={styles.button}
                 onClick={() => setTypeVisible(true)}>
                 Добавить тип
             </Button>
             <Button 
-                variant={'outline-dark'} 
-                className='mt-4 p-2'
+                variant='outlined' 
+                sx={styles.button}
                 onClick={() => setBrandVisible(true)}>
                 Добавить бренд
             </Button>
             <Button 
-                variant={'outline-dark'} 
-                className='mt-4 p-2'
+                variant='outlined' 
+                sx={styles.button}
                 onClick={() => setDeviceVisible(true)}>
                 Добавить устройство
             </Button>

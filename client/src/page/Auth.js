@@ -1,14 +1,36 @@
 import React, { useContext, useState } from 'react';
-import { Button, Card, Container, Form, Row } from 'react-bootstrap';
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../utils/consts';
+import { Button, Card, Container, FormControl, InputLabel, TextField, Typography } from '@mui/material';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { login, registration } from '../http/userAPI';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
+import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../utils/consts';
+
+const styles = {
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 'calc(100vh - 54px)',
+  },
+  card: {
+    width: 600,
+    padding: 5,
+  },
+  formControl: {
+    marginTop: 4,
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: 4,
+    paddingLeft: 3,
+    paddingRight: 3,
+  },
+};
 
 const Auth = observer(() => {
-
-  const {user} = useContext(Context)
+  const { user } = useContext(Context);
   const location = useLocation();
   const history = useNavigate();
 
@@ -18,71 +40,62 @@ const Auth = observer(() => {
   const [password, setPassword] = useState('');
 
   const click = async () => {
-
     try {
-
       let data;
 
       if (isLogin) {
         data = await login(email, password);
       } else {
         data = await registration(email, password);
-      };
-  
+      }
+
       user.setUser(user);
       user.setIsAuth(true);
-      history(SHOP_ROUTE)
-
+      history(SHOP_ROUTE);
     } catch (e) {
-      alert(e.response.data.message)
+      alert(e.response.data.message);
     }
-
-   
-
   };
 
   return (
-    <Container 
-      className='d-flex align-items-center justify-content-center'
-      style={{height: window.innerHeight - 54}}
-    >
-      <Card style={{width: 600}} className='p-5'>
-        <h2 className='m-auto'>{isLogin ? 'Авторизация' : 'Регистрация'}</h2>
-        <Form className='d-flex flex-column'>
-          <Form.Control
-            className='mt-4'
-            placeholder='Введите Email'
+    <Container sx={styles.container}>
+      <Card sx={styles.card}>
+        <Typography variant="h6" sx={{ textAlign: 'center' }}>
+          {isLogin ? 'Авторизация' : 'Регистрация'}
+        </Typography>
+        <FormControl component="form" sx={{ display: 'flex', flexDirection: 'column' }}>
+          <TextField
+            sx={styles.formControl}
+            label="Введите Email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <Form.Control
-            className='mt-3'
-            placeholder='Введите пароль'
+          <TextField
+            sx={styles.formControl}
+            label="Введите пароль"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
           />
-          <Row className="d-flex justify-content-between mt-4 pl-3 pr-3">
-            {isLogin ?
-              <div>
-                Еще не зарегистрированы? <NavLink to={REGISTRATION_ROUTE}>Зарегистрируйтесь!</NavLink>
-              </div>
-              :
-              <div>
+          <div sx={styles.row}>
+            {isLogin ? (
+              <Typography>
+                Еще не зарегистрированы?{' '}
+                <NavLink to={REGISTRATION_ROUTE}>Зарегистрируйтесь!</NavLink>
+              </Typography>
+            ) : (
+              <Typography>
                 Есть аккаунт? <NavLink to={LOGIN_ROUTE}>Войдите!</NavLink>
-              </div>
-            }
-            <Button 
-              variant={'outline-success'}
-              onClick={click}
-            >
-              {isLogin ? 'Войти' : 'Зарегистироваться'}
+              </Typography>
+            )}
+            <Button variant="outlined" onClick={click}>
+              {isLogin ? 'Войти' : 'Зарегистрироваться'}
             </Button>
-          </Row>
-        </Form>
+          </div>
+        </FormControl>
       </Card>
     </Container>
   );
-})
+});
 
 export default Auth;
